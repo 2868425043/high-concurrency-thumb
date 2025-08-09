@@ -1,7 +1,9 @@
 package com.yuyuan.thumb.controller;
 
 import com.yuyuan.thumb.common.BaseResponse;
+import com.yuyuan.thumb.common.ErrorCode;
 import com.yuyuan.thumb.common.ResultUtils;
+import com.yuyuan.thumb.exception.ThrowUtils;
 import com.yuyuan.thumb.model.entity.Blog;
 import com.yuyuan.thumb.model.vo.BlogVO;
 import com.yuyuan.thumb.service.BlogService;
@@ -25,6 +27,7 @@ public class BlogController {
 
     @GetMapping("/get")
     public BaseResponse<BlogVO> get(long blogId, HttpServletRequest request) {
+        ThrowUtils.throwIf(blogId <= 0, ErrorCode.PARAMS_ERROR);
         BlogVO blogVO = blogService.getBlogVOById(blogId, request);
         return ResultUtils.success(blogVO);
     }
