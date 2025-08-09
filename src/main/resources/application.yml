@@ -1,3 +1,5 @@
+server:
+  port: 9199
 spring:
   application.name: thumb-backend
   mvc:
@@ -8,9 +10,9 @@ spring:
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: xxx
-    username: xxx
-    password: xxx
+    url: jdbc:mysql://localhost:3306/thumb_db
+    username: root
+    password: root
   data:
     # Redis 配置
     redis:
@@ -29,8 +31,6 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-server:
-  port: 9199
 # 整合 Prometheus + Grafana
 management:
   endpoints:
