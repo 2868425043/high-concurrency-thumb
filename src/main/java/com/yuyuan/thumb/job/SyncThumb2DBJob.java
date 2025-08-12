@@ -14,10 +14,12 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 定时将 Redis 中的临时点赞数据同步到数据库
@@ -61,7 +63,7 @@ public class SyncThumb2DBJob {
         if (thumbMapEmpty) {
             return;
         }
-        ArrayList<Thumb> thumbList = new ArrayList<>();
+        List<Thumb> thumbList = new ArrayList<>();
         LambdaQueryWrapper<Thumb> wrapper = new LambdaQueryWrapper<>();
         boolean needRemove = false;
         for (Object userIdBlogIdObj : allTempThumbMap.keySet()) {

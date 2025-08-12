@@ -15,7 +15,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +58,8 @@ public class ThumbReconcileJob {
 
         // 2. 逐用户比对
         userIds.forEach(userId -> {
-            Set<Long> redisBlogIds = redisTemplate.opsForHash().keys(ThumbConstant.USER_THUMB_KEY_PREFIX + userId).stream().map(obj -> Long.valueOf(obj.toString())).collect(Collectors.toSet());
+            Set<Long> redisBlogIds = redisTemplate.opsForHash().keys(ThumbConstant.USER_THUMB_KEY_PREFIX + userId).stream()
+                    .map(obj -> Long.valueOf(obj.toString())).collect(Collectors.toSet());
             Set<Long> mysqlBlogIds = Optional.ofNullable(thumbService.lambdaQuery()
                             .eq(Thumb::getUserId, userId)
                             .list()
